@@ -1,0 +1,43 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+<Configuration>
+               
+	<Properties>
+		<Property name="log-path">D:${symbol_escape}</Property>
+	</Properties>
+  	<Appenders>
+		<!-- <RollingFile 	name="security" 
+        				fileName="${symbol_dollar}{log-path}/security-log.log" 
+        				filePattern="${symbol_dollar}{log-path}/security-log-%i.log" 
+        				append="true">
+      		<PatternLayout 	pattern="%d{ISO8601} %-30.-30t %-35.35c %5p - %m %X%n" 
+          					charset="UTF-8"/>
+      		<Policies>
+        		<SizeBasedTriggeringPolicy size="100 MB"/>
+      		</Policies>
+      		<DefaultRolloverStrategy max="10"/>
+    	</RollingFile>
+  	    <RollingFile 	name="appender" 
+        				fileName="${symbol_dollar}{log-path}/log.log" 
+        				filePattern="${symbol_dollar}{log-path}/log-%i.log" 
+        				append="true">
+      		<PatternLayout 	pattern="%d{ISO8601} %-30.-30t %-35.35c %5p - %m %X%n" 
+          					charset="UTF-8"/>
+      		<Policies>
+        		<SizeBasedTriggeringPolicy size="100 MB"/>
+      		</Policies>
+      		<DefaultRolloverStrategy max="10"/>
+    	</RollingFile> -->
+  	</Appenders>
+  	<Loggers>
+  		<!-- <Logger name="org.springframework.security" level="trace">
+	      <AppenderRef ref="security"/>
+	    </Logger>
+    	<Root level="debug">
+      		<AppenderRef ref="appender"/>
+    	</Root> -->
+  	</Loggers>
+</Configuration>
