@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path="api/")
+@RequestMapping(path="api/web")
 public class RestControllerTemplate {
 
 	@RequestMapping(path="resource", method=RequestMethod.GET)

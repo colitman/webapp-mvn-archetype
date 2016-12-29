@@ -11,5 +11,6 @@ package ${package}.${artifactId}.domain;
  * Designates a persistent entity
  */
 public interface EntityInterface {
-	
+	boolean isDeleted();
+    void setDeleted(boolean isDeleted);
 }

@@ -15,7 +15,7 @@ public interface IdentifiedEntityInterface extends EntityInterface {
 	 * Gets the unique numeric ID of the entity
 	 * @return the entity numeric ID
      */
-	Long getKey();
+	Long getId();
 
 	/**
 	 * <p>Sets the numeric ID for an entity.</p>
@@ -23,5 +23,5 @@ public interface IdentifiedEntityInterface extends EntityInterface {
 	 * <p>ID should be unique within a datastorage</p>
 	 * @param key ID to set
      */
-	void setKey(Long key);
+	void setId(Long key);
 }

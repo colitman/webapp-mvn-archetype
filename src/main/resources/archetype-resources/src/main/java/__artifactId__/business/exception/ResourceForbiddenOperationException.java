@@ -1,0 +1,18 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+package ${package}.${artifactId}.business;
+
+public class ResourceForbiddenOperationException extends Exception {
+
+	private static final long serialVersionUID = 1L;
+	
+	public ResourceForbiddenOperationException(String message) {
+		super(message);
+	}
+
+	public ResourceForbiddenOperationException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+}

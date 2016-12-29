@@ -24,33 +24,38 @@ public class User implements IdentifiedEntityInterface, UserDetails {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column(name="key")
+	@Column(name="id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long key;
+	private Long id;
 	
-	@Column(name="username", nullable=false, unique=true)
-	@NameColumn
-	@Type(type="text")
+	@Column(name="username")
 	private String username;
 	
-	@Column(name="password", nullable=false)
-	@Type(type="text")
+	@Column(name="password")
 	private String password;
 
+	@Column(name = "email")
+	private String email;
+
+	@Column(name="isDeleted")
+	private boolean deleted;
+
 	public User() {
-		this.key = -1L;
-		this.username = "";
-		this.password = "";
+		this.id = -1L;
+		this.username = null;
+		this.password = null;
+		this.email = null;
+		this.deleted = false;
 	}
 
 	@Override
-	public Long getKey() {
-		return key;
+	public Long getId() {
+		return id;
 	}
 
 	@Override
-	public void setKey(Long key) {
-		this.key = key;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	@Override
@@ -63,17 +68,6 @@ public class User implements IdentifiedEntityInterface, UserDetails {
 	}
 
 	@Override
-	@Transient
-	public String getName() {
-		return getUsername();
-	}
-
-	@Override
-	public void setName(String name) {
-		setUsername(name);
-	}
-
-	@Override
 	public String getPassword() {
 		return password;
 	}
@@ -82,11 +76,27 @@ public class User implements IdentifiedEntityInterface, UserDetails {
 		this.password = password;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 17;
-		result = prime * result + ((key == null) ? 0 : key.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -99,10 +109,10 @@ public class User implements IdentifiedEntityInterface, UserDetails {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		if (key == null) {
-			if (other.key != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!key.equals(other.key))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}
