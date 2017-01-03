@@ -13,6 +13,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
+<sec:csrfMetaTags/>
+<sec:authorize access="isAuthenticated()" var="authenticated"></sec:authorize>
+<c:if test="${symbol_dollar}{authenticated}">
+	<sec:authentication property="name" var="currentUsername"></sec:authentication>
+	<meta name="principal" content="${symbol_dollar}{currentUsername}" >
+</c:if>
+
 <meta name="contextPath" content="${symbol_dollar}{app}">
 
 <title>${symbol_dollar}{pageTitle}</title>
@@ -22,9 +29,13 @@
 		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 		crossorigin="anonymous">
 
+<link rel="stylesheet" href="${symbol_dollar}{app}/res/bootstrap/bootstrap.css">
+
 <link rel="stylesheet"
 		href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"
 		integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1"
 		crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css">
 
 <link rel="stylesheet" href="${symbol_dollar}{app}/res/app/css/main.css">

@@ -8,11 +8,11 @@
 
 <c:set var="app" value="${symbol_dollar}{pageContext.servletContext.contextPath}" />
 
-<footer class="hd-main-footer navbar-fixed-bottom">
+<footer class="navbar-fixed-bottom">
 	<p class="text-center text-muted">
 		[[app_name]] |
 		<a href="https://ua.linkedin.com/in/dmytro-romenskyi-87035524">Dmytro Romenskyi</a> |
-		HobbyDev | [[year]] |
+		[[year]] |
 		<a href="${symbol_dollar}{app}/swagger-ui.html">API Reference</a>
 	</p>
 </footer>

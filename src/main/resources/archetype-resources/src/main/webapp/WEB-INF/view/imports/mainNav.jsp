@@ -7,7 +7,11 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
 <c:set var="app" value="${symbol_dollar}{pageContext.servletContext.contextPath}" />
-<c:set var="isAnon" value="${symbol_dollar}{empty currentUser}" />
+<sec:authorize access="isAuthenticated()" var="authenticated"></sec:authorize>
+
+<c:if test="${symbol_dollar}{authenticated}">
+	<sec:authentication property="name" var="currentUsername"></sec:authentication>
+</c:if>
 
 <nav class="navbar navbar-default navbar-fixed-top">
 	<div class="container">
@@ -16,16 +20,16 @@
 			<button type="button"
 					class="navbar-toggle collapsed"
 					data-toggle="collapse"
-					data-target="${symbol_pound}hd-main-nav">
+					data-target="${symbol_pound}c-top-nav">
 			
 				<i class="fa fa-bars"></i>
 			</button>
 		</div>
 		
-		<div class="collapse navbar-collapse" id="hd-main-nav">
+		<div class="collapse navbar-collapse" id="c-top-nav">
 			
 		</div>
 	</div>
 </nav>
 
-<section class="hd-alerts"></section>
+<section class="c-js-alerts"></section>
