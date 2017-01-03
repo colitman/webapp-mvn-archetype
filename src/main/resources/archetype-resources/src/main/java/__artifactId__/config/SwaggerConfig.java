@@ -21,6 +21,9 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import ${package}.${artifactId}.Application;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * Swagger configuration
  */
@@ -29,19 +32,42 @@ import ${package}.${artifactId}.Application;
 public class SwaggerConfig {
 	
 	@Bean
-	public Docket api() {
-		String apiBasePackage = ClassUtils.getPackageName(Application.class) + ".web.api";
+	public Docket webApi() {
+		String apiBasePackage = ClassUtils.getPackageName(Application.class) + ".api.web";
 		
 		Docket docket = new Docket(DocumentationType.SWAGGER_2);
 		docket
-			.select()
-				.apis(RequestHandlerSelectors.basePackage(apiBasePackage))
-				.paths(PathSelectors.ant("/api/**"))
-				.build()
-			.apiInfo(apiInfo())
-			.ignoredParameterTypes(CurrentUser.class,
-									CookieValue.class);
+				.groupName("1 - web")
+				.select()
+					.apis(RequestHandlerSelectors.basePackage(apiBasePackage))
+					.paths(PathSelectors.ant("/api/web/**"))
+					.build()
+				.apiInfo(apiInfo())
+				.ignoredParameterTypes(CurrentUser.class,
+										CookieValue.class,
+										HttpServletRequest.class,
+										HttpServletResponse.class);
 		
+		return docket;
+	}
+
+	@Bean
+	public Docket mobileApi() {
+		String apiBasePackage = ClassUtils.getPackageName(Application.class) + ".api.mobile";
+
+		Docket docket = new Docket(DocumentationType.SWAGGER_2);
+		docket
+				.groupName("2 - mobile")
+				.select()
+					.apis(RequestHandlerSelectors.basePackage(apiBasePackage))
+					.paths(PathSelectors.ant("/api/mobile/**"))
+					.build()
+				.apiInfo(apiInfo())
+				.ignoredParameterTypes(CurrentUser.class,
+						CookieValue.class,
+						HttpServletRequest.class,
+						HttpServletResponse.class);
+
 		return docket;
 	}
 	
@@ -50,10 +76,10 @@ public class SwaggerConfig {
 				"Public API",
 				"API for public use and integration",
 				"1.0",
-				"[[terms_of_service_url]]",
+				"tos",
 				new Contact("Dmytro Romenskyi", "https://ua.linkedin.com/in/dmytro-romenskyi-87035524", "d.romenskyi@gmail.com"),
 				"This software is licensed under the terms of the MIT license.",
-				"[[licence_url]]");
+				"res/app/LICENSE.md");
 		return apiInfo;
 		
 	}

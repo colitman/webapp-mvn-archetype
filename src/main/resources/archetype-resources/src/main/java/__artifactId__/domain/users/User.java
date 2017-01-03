@@ -11,11 +11,11 @@ import org.hibernate.annotations.Type;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
-import ${package}.${artifactId}.data.NameColumn;
-import ${package}.${artifactId}.domain.UniqueNamedEntityInterface;
 
 import javax.persistence.*;
 import java.util.Collection;
+
+import ${package}.${artifactId}.domain.IdentifiedEntityInterface;
 
 @Entity
 @Table(name="users")
@@ -34,19 +34,8 @@ public class User implements IdentifiedEntityInterface, UserDetails {
 	@Column(name="password")
 	private String password;
 
-	@Column(name = "email")
-	private String email;
-
 	@Column(name="isDeleted")
 	private boolean deleted;
-
-	public User() {
-		this.id = -1L;
-		this.username = null;
-		this.password = null;
-		this.email = null;
-		this.deleted = false;
-	}
 
 	@Override
 	public Long getId() {
@@ -74,14 +63,6 @@ public class User implements IdentifiedEntityInterface, UserDetails {
 	
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 	public boolean isDeleted() {

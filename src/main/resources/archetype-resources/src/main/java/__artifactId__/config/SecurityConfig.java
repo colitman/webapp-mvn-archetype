@@ -20,6 +20,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 /**
@@ -59,20 +60,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
 			.csrf().disable()
 			.authorizeRequests()
-				.antMatchers(HttpMethod.GET, "/[[sign_up_page]]", "/favicon.ico" , WebMvcConfig.RESOURCES_BASE_URL).permitAll()
+				.antMatchers(HttpMethod.GET, "/favicon.ico" , WebMvcConfig.RESOURCES_BASE_URL).permitAll()
 				.and()
 			.formLogin()
-				.loginPage("/[[sign_in_page]]").permitAll()
-				.loginProcessingUrl("/[[sign_in_page]]")
+				.loginPage("/login").permitAll()
+				.loginProcessingUrl("/login")
 				.usernameParameter("username")
 				.passwordParameter("password")
 				.defaultSuccessUrl("/", false)
-				.failureUrl("/[[sign_in_page]]?error")
+				.failureUrl("/login?error")
 				.and()
 			.logout()
-				.logoutUrl("/[[sign_out_page]]")
-				.logoutSuccessUrl("/[[sign_in_page]]")
+				.logoutUrl("/logout")
+				.logoutSuccessUrl("/login")
 				.invalidateHttpSession(true)
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 				.and()
 			.exceptionHandling()
 				.accessDeniedHandler(accessDeniedHandler);

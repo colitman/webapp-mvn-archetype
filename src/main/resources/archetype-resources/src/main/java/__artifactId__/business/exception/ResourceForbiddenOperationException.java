@@ -1,7 +1,7 @@
 #set( $symbol_pound = '#' )
 #set( $symbol_dollar = '$' )
 #set( $symbol_escape = '\' )
-package ${package}.${artifactId}.business;
+package ${package}.${artifactId}.business.exception;
 
 public class ResourceForbiddenOperationException extends Exception {
 

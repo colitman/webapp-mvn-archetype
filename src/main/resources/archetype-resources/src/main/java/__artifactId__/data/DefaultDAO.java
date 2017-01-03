@@ -9,14 +9,10 @@ package ${package}.${artifactId}.data;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ${package}.${artifactId}.domain.EntityInterface;
 import ${package}.${artifactId}.domain.IdentifiedEntityInterface;
-import ${package}.${artifactId}.domain.NamedEntityInterface;
-import ${package}.${artifactId}.domain.UniqueNamedEntityInterface;
 
 import java.util.Collections;
 import java.util.List;
@@ -38,112 +34,43 @@ public class DefaultDAO {
 	 * Checks whether the entity with provided key exists
 	 *
 	 * @param clazz entity class
-	 * @param key key to check
+	 * @param id key to check
      * @return true is entity of the provided class with provided key exists; false otherwise
      */
-	public <ENTITY extends IdentifiedEntityInterface> boolean exists(Class<ENTITY> clazz, Long key) {
+	public <ENTITY extends IdentifiedEntityInterface> boolean exists(Class<ENTITY> clazz, Long id) {
 		
-		if(key == null) {
+		if(id == null) {
 			return false;
 		}
 		
 		Session session = getSession();
 		
-		ENTITY entity = session.get(clazz, key);
-		
-		return entity != null;
-	}
-
-	/**
-	 * Gets key of the entity with provided name
-	 *
-	 * @param clazz entity class
-	 * @param name name to discover a key
-	 *
-	 * @return ID of the entity of the provided class with provided name.
-	 *
-	 * @throws ObjectNotExistsException if entity of provided class with provided name does not exist.
-	 * @throws IllegalArgumentException if provided name id NULL
-     */
-	public <ENTITY extends UniqueNamedEntityInterface> Long getKeyByName(Class<ENTITY> clazz, String name) throws ObjectNotExistsException {
-		if (name == null) {
-			throw new IllegalArgumentException("Invalid value for entity name provided:[NULL]");
-		}
-		
-		String nameColumnAlias = Utils.resolveNameColumnAlias(clazz);
-		String keyColumnAlias = Utils.resolveKeyColumnAlias(clazz);
-		
-		Session session = getSession();
-		Long id = (Long) session.createCriteria(clazz)
-							.add(Restrictions.eq(nameColumnAlias, name))
-							.setProjection(Projections.property(keyColumnAlias))
-							.uniqueResult();
-		
-		if(id == null) {
-			throw new ObjectNotExistsException(clazz.getSimpleName() + " entity with requested name does not exist:[" + name + "]");
-		}
-		
-		return id;
-	}
-
-	/**
-	 * Gets a list of keys of entities with provided name
-	 *
-	 * @param clazz entity class
-	 * @param name name to discover keys
-	 *
-	 * @return List of IDs of entities of the provided class with provided name.
-	 * Returns empty list if there are no entities of provided class with provided name
-	 *
-	 * @throws IllegalArgumentException if provided name id NULL
-	 */
-	public <ENTITY extends NamedEntityInterface> List<Long> getKeysByName(Class<ENTITY> clazz, String name) {
-		if (name == null) {
-			throw new IllegalArgumentException("Invalid value for entity name provided:[NULL]");
-		}
-		
-		String nameColumnAlias = Utils.resolveNameColumnAlias(clazz);
-		String keyColumnAlias = Utils.resolveKeyColumnAlias(clazz);
-		
-		Session session = getSession();
-
-		@SuppressWarnings("unchecked")
-		List<Long> ids = session.createCriteria(clazz)
-									.add(Restrictions.eq(nameColumnAlias, name))
-									.setProjection(Projections.property(keyColumnAlias))
-									.list();
-		
-		if(ids == null) {
-			ids = Collections.emptyList();
-		}
-		
-		return ids;
+		return session.get(clazz, id) != null;
 	}
 
 	/**
 	 * Gets an entity by key
 	 *
 	 * @param clazz entity class
-	 * @param key key to search
+	 * @param id key to search
 	 *
 	 * @return Entity of the provided class with provided ID
 	 *
 	 * @throws ObjectNotExistsException if entity of provided class with provided ID does not exist
 	 * @throws IllegalArgumentException if provided key id NULL
      */
-	public <ENTITY extends IdentifiedEntityInterface> ENTITY getByKey(Class<ENTITY> clazz, Long key) throws ObjectNotExistsException {
-		if (key == null) {
-			throw new IllegalArgumentException("Invalid value for entity key provided:[NULL]");
+	public <ENTITY extends IdentifiedEntityInterface> ENTITY getById(Class<ENTITY> clazz, Long id) throws ObjectNotExistsException {
+		if (id == null) {
+			throw new IllegalArgumentException("Invalid value for entity ID provided:[NULL]");
 		}
 		
-		if(!exists(clazz, key)) {
-			throw new ObjectNotExistsException(clazz.getSimpleName() + " entity with requested key does not exist:[" + key.toString() + "]");
+		if(!exists(clazz, id)) {
+			throw new ObjectNotExistsException(clazz.getSimpleName() + " entity with requested id does not exist:[" + String.valueOf(id) + "]");
 		}
 		
 		Session session = getSession();
-		
-		ENTITY entity = session.load(clazz, key);
-		return entity;
+
+		return session.load(clazz, id);
 	}
 
 	/**
@@ -152,7 +79,7 @@ public class DefaultDAO {
 	 *
      * @return a list of all entities of provided class or empty list if there no such entities
      */
-	public <ENTITY extends EntityInterface> List<ENTITY> getAll(Class<ENTITY> clazz) {
+	public <ENTITY extends IdentifiedEntityInterface> List<ENTITY> getAll(Class<ENTITY> clazz) {
 		Session session = getSession();
 		
 		@SuppressWarnings("unchecked")
@@ -193,12 +120,26 @@ public class DefaultDAO {
 			throw new IllegalArgumentException("Invalid entity provided:[NULL]");
 		}
 		
-		if(entity.getKey() == null || !exists(entity.getClass(), entity.getKey())) {
+		if(entity.getId() == null || !exists(entity.getClass(), entity.getId())) {
 			throw new ObjectNotExistsException(entity.getClass().getSimpleName() + " entity, requested for update does not exist");
 		}
 		
 		Session session = getSession();
 
 		return session.merge(entity) != null;
+	}
+
+	public <ENTITY extends IdentifiedEntityInterface> void delete(Class<ENTITY> clazz, Long id) {
+		if (id == null) {
+			throw new IllegalArgumentException("Invalid value for entity ID provided:[NULL]");
+		}
+
+		if(!exists(clazz, id)) {
+			// TODO add logging
+			return;
+		}
+
+		Session session = getSession();
+		session.delete(session.load(clazz, id));
 	}
 }
