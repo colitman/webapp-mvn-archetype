@@ -43,7 +43,8 @@ public class SwaggerConfig {
 					.paths(PathSelectors.ant("/api/web/**"))
 					.build()
 				.apiInfo(apiInfo())
-				.ignoredParameterTypes(CurrentUser.class,
+				.ignoredParameterTypes(Authentication.class,
+										CurrentUser.class,
 										CookieValue.class,
 										HttpServletRequest.class,
 										HttpServletResponse.class);
@@ -63,7 +64,8 @@ public class SwaggerConfig {
 					.paths(PathSelectors.ant("/api/mobile/**"))
 					.build()
 				.apiInfo(apiInfo())
-				.ignoredParameterTypes(CurrentUser.class,
+				.ignoredParameterTypes(Authentication.class,
+						CurrentUser.class,
 						CookieValue.class,
 						HttpServletRequest.class,
 						HttpServletResponse.class);

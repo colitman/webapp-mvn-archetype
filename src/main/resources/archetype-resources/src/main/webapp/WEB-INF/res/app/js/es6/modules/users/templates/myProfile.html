@@ -1,0 +1,102 @@
+<section class="content-header">
+    <h1>My Profile</h1>
+
+    <ol class="breadcrumb">
+        <li><a href="#!/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">{{user.firstName}} {{user.lastName}}</li>
+    </ol>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="box box-primary">
+                <div class="box-body">
+                    <img src="res/app/media/defaults/user-image.png" class="profile-user-img img-responsive img-circle" />
+                    <h3 class="profile-username text-center">{{user.firstName}} {{user.lastName}}</h3>
+                    <p class="text-muted text-center">$Position$</p>
+
+                    <ul class="list-group list-group-unbordered">
+                        <li class="list-group-item">
+                            {{user.email}} <i class="fa fa-envelope pull-right"></i>
+                        </li>
+                        <li class="list-group-item">
+                            {{user.startWorkDate}} <i class="fa fa-hourglass-start pull-right"></i>
+                        </li>
+                        <li class="list-group-item">
+                            {{user.authorities}} <i class="fa fa-shield pull-right"></i>
+                        </li>
+                    </ul>
+
+                    <button class="btn btn-primary btn-block" ng-click="$ctrl.openPasswordChangeModal()">Change Password</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="" data-target="#summary" data-toggle="tab">Summary</a></li>
+                    <li><a href="" data-target="#settings" data-toggle="tab">Settings</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="active tab-pane" id="summary">
+                        <div class="row">
+                            <div class="col-md-4" ng-if="relatedUndecided > 0">
+                                <div class="small-box bg-yellow">
+                                    <div class="inner">
+                                        <h3>{{relatedUndecided}}</h3>
+
+                                        <p>Requests to approve</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fa fa-gavel"></i>
+                                    </div>
+                                    <a href="#!/users/{{user.id}}/requests/related" class="small-box-footer">
+                                        More info <i class="fa fa-arrow-circle-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4" ng-if="submittedUndecided > 0">
+                                <div class="small-box bg-red">
+                                    <div class="inner">
+                                        <h3>{{submittedUndecided}}</h3>
+
+                                        <p>Your requests are not approved yet</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fa fa-hourglass-half"></i>
+                                    </div>
+                                    <a href="#!/users/{{user.id}}/requests/submitted" class="small-box-footer">
+                                        More info <i class="fa fa-arrow-circle-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="box box-primary">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">Balances</h3>
+                                    </div>
+                                    <div class="box-body">
+                                        <ul class="list-group list-group-unbordered">
+                                            <li class="list-group-item" ng-repeat="balance in balances">
+                                                {{balance.type.name}} <span class="badge pull-right">{{balance.amount}}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="settings">
+                        Settings
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

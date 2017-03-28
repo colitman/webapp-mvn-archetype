@@ -1,0 +1,38 @@
+<header class="modal-header">
+    <button type="button" class="close" ng-click="$ctrl.dismiss()">&times;</button>
+    <h4 class="modal-title">Password change</h4>
+</header>
+<div class="modal-body">
+
+    <form id="c-change-password-form" name="changePasswordForm" ng-submit="$ctrl.doChange()">
+        <div class="form-group has-feedback">
+            <label for="oldPassword">Current Password</label>
+            <input type="password" class="form-control"
+                   id="oldPassword" name="oldPassword" ng-model="$ctrl.oldPass"
+                   placeholder="Current Password" required="required"/>
+            <i class="glyphicon glyphicon-lock form-control-feedback"></i>
+        </div>
+
+        <div class="form-group has-feedback">
+            <label for="newPassword">New Password</label>
+            <input type="password" class="form-control"
+                   id="newPassword" name="newPassword" ng-model="$ctrl.newPass"
+                   placeholder="New Password" required="required" />
+            <i class="glyphicon glyphicon-lock form-control-feedback"></i>
+        </div>
+
+        <div class="form-group has-feedback" ng-class="{'has-error':changePasswordForm.newPassword2.$error.passwordMatch}">
+            <label for="newPassword2">New Password Again</label>
+            <input type="password" class="form-control"
+                   id="newPassword2" name="newPassword2" ng-model="$ctrl.newPass2" match-password="newPassword"
+                   placeholder="New Password Again" required="required" />
+            <i class="glyphicon glyphicon-lock form-control-feedback"></i>
+        </div>
+    </form>
+
+</div>
+<footer class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="$ctrl.dismiss()">Close</button>
+    <button form="c-change-password-form" type="submit" class="btn btn-primary"
+            ng-disabled="changePasswordForm.newPassword2.$error.passwordMatch">Change</button>
+</footer>

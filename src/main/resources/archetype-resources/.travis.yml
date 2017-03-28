@@ -15,7 +15,7 @@ branches:
 before_deploy:
   - ./heroku_deploy.sh
   - git config user.email "d.romenskyi@gmail.com"
-  - git config user.name "HobbyDev"
+  - git config user.name "Dmytro Romenskyi"
   - git commit -a -m "adding heroku environment definition"
 
 deploy:

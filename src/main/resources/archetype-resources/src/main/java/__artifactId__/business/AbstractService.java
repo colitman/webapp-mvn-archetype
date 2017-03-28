@@ -35,21 +35,19 @@ public abstract class AbstractService {
 		if(id == null) {
 			throw new IllegalArgumentException("Provided ID is NULL");
 		}
-
-		if(!getDAO().exists(getEntityClass(), id)) {
-			//TODO add logging
-			return;
-		}
-
+		
 		if(softDelete) {
-			try {
-				getDAO().getById(getEntityClass(), id).setDeleted(true);
-			} catch (ObjectNotExistsException e) {
-				//TODO add logging
-				return;
-			}
+			final boolean[] isDeleted = {false};
+			getDAO().getAll(getEntityClass()).stream()
+					.filter(e -> e.getId().equals(id))
+					.findFirst()
+					.ifPresent(s -> {
+						s.setDeleted(true);
+						isDeleted[0] = true;
+					});
+			return isDeleted[0];
 		} else {
-			getDAO().delete(getEntityClass(), id);
+			return getDAO().delete(getEntityClass(), id);
 		}
 	}
 

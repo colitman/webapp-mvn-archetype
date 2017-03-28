@@ -1,0 +1,66 @@
+<a href="#!/" class="logo">App</a>
+
+<nav class="navbar navbar-static-top">
+    <div class="navbar-custom-menu" ng-if="$ctrl.currentUser.unknown">
+        <ul class="nav navbar-nav">
+            <li>
+                <a href="help"><i class="fa fa-info"></i></a>
+            </li>
+        </ul>
+    </div>
+    <div class="navbar-custom-menu" ng-if="!$ctrl.currentUser.unknown">
+        <ul class="nav navbar-nav">
+            <li ng-if="$ctrl.currentUser.admin || $ctrl.currentUser.hr">
+                <a href="#!/admin"><i class="fa fa-shield"></i></a>
+            </li>
+
+            <li>
+                <a href="#!/users"><i class="fa fa-users"></i></a>
+            </li>
+
+            <li>
+                <a href="" ng-click="$ctrl.openRequestTimeOffModal()"><i class="fa fa-calendar-plus-o"></i></a>
+            </li>
+
+            <li class="dropdown user user-menu">
+                <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                    <span ng-if="$ctrl.pendingCount > 0" class="label label-warning"><i class="fa fa-bell-o"></i></span>
+                    <img src="res/app/media/defaults/user-image.png" class="user-image" alt="{{$ctrl.currentUser.firstName}} {{$ctrl.currentUser.lastName}}">
+                    <span class="hidden-xs">{{$ctrl.currentUser.firstName}} {{$ctrl.currentUser.lastName}}</span>
+                </a>
+
+                <ul class="dropdown-menu">
+                    <!-- User image -->
+                    <li class="user-header">
+                        <img src="res/app/media/defaults/user-image.png" class="img-circle" alt="{{$ctrl.currentUser.firstName}} {{$ctrl.currentUser.lastName}}">
+                        <p>
+                            {{$ctrl.currentUser.firstName}} {{$ctrl.currentUser.lastName}} - $Position$
+                            <small>Joined on {{$ctrl.currentUser.startWorkDate}}</small>
+                        </p>
+                    </li>
+                    <!-- Menu Body -->
+                    <li class="user-body">
+                        <div class="col-xs-6 text-center">
+                            <a href="#!/users/{{$ctrl.currentUser.id}}/requests/submitted">Submitted Requests</a>
+                        </div>
+                        <div class="col-xs-6 text-center">
+                            <a href="#!/users/{{$ctrl.currentUser.id}}/requests/related">Related Requests <span class="label label-warning">{{$ctrl.pendingCount}}</span></a>
+                        </div>
+                    </li>
+                    <!-- Menu Footer-->
+                    <li class="user-footer">
+                        <div class="pull-left">
+                            <a href="#!/profile" class="btn btn-default btn-flat">Profile</a>
+                        </div>
+                        <div class="pull-right">
+                            <a href="logout#" class="btn btn-default btn-flat">Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+            </li>
+        </ul>
+    </div>
+</nav>

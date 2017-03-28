@@ -15,12 +15,17 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping(method=RequestMethod.GET)
 public class BaseController {
-
-	@RequestMapping(path="/")
-	public ModelAndView root(ModelAndView mv) {
-
-		mv.setViewName("root");
-		
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(path="/*", method = RequestMethod.GET)
+	public ModelAndView getGenericPage(ModelAndView mv) {
+		mv.setViewName("pages/generic");
+		return mv;
+	}
+	
+	@RequestMapping(path="/docs", method = RequestMethod.GET)
+	public ModelAndView getApi(ModelAndView mv) {
+		mv.setViewName("swagger-ui");
 		return mv;
 	}
 }

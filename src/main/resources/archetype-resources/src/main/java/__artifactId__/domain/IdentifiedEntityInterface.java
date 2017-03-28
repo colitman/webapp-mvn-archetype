@@ -10,7 +10,7 @@ package ${package}.${artifactId}.domain;
 /**
  * Designates a persistent entity that has a unique numeric ID
  */
-public interface IdentifiedEntityInterface extends EntityInterface {
+public interface IdentifiedEntityInterface {
 	/**
 	 * Gets the unique numeric ID of the entity
 	 * @return the entity numeric ID
@@ -24,4 +24,7 @@ public interface IdentifiedEntityInterface extends EntityInterface {
 	 * @param id ID to set
      */
 	void setId(Long id);
+	
+	boolean isDeleted();
+	void setDeleted(boolean isDeleted);
 }

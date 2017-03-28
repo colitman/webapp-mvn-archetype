@@ -1,26 +1,27 @@
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-
 #set($symbol_pound='#')
-        #set($symbol_dollar='$')
-        #set($symbol_escape='\' )
+#set($symbol_dollar='$')
+#set($symbol_escape='\' )
+
 /**
  * This software is licensed under the terms of the MIT license.
  * Copyright (C) 2016 Dmytro Romenskyi
  */
-        package ${package}.${artifactId}.business.users;
-        {package}.${artifactId}.business.AbstractService;
-        {package}.${artifactId}.domain.users.User;
+package ${package}.${artifactId}.business.users;
+
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+        
+import java.util.List;
+import ${package}.${artifactId}.business.AbstractService;
+import ${package}.${artifactId}.domain.users.User;
 
 /**
  * User Service
  */
 @Service
-public class UserService extends AbstractService implements UserDetailsService {
+public class UserService extends AbstractService implements UserServiceInterface {
 
     @Override
     protected Class<User> getEntityClass() {
@@ -31,18 +32,15 @@ public class UserService extends AbstractService implements UserDetailsService {
     @Transactional
     public User loadUserByUsername(String username) throws UsernameNotFoundException {
         try {
-            List<User> allUsers = getDAO().getAll(getEntityClass());
-            User foundUser = allUsers.stream()
-                    .filter(
-                            (user) -> user.getUsername().equals(username) && !user.isDeleted()
-                    )
+            User foundUser = listUsers().stream()
+                    .filter(user -> user.getUsername().equals(username))
                     .findFirst()
-                    .orElseThrow(() -> new UsernameNotFoundException(username));
+                    .orElseThrow(() -> new UsernameNotFoundException("User with provided email was not found - " + username));
             return foundUser;
         } catch (UsernameNotFoundException unfe) {
             throw unfe;
         } catch (Throwable t) {
-            throw new RuntimeException("Authentication service failure. Please contact the administrator");
+            throw new RuntimeException("Authentication service failure. Please contact the administrator", t);
         }
     }
 }
