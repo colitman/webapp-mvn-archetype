@@ -90,7 +90,7 @@ public class DefaultDAO {
 		return (Long) session.save(entity);
 	}
 
-	public <ENTITY extends IdentifiedEntityInterface> void delete(Class<ENTITY> clazz, Long id) {
+	public <ENTITY extends IdentifiedEntityInterface> boolean delete(Class<ENTITY> clazz, Long id) {
 		if(softDelete) {
 			throw new UnsupportedOperationException("Physical delete operation forbidden");
 		}

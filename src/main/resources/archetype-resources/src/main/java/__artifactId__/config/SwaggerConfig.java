@@ -23,6 +23,7 @@ import ${package}.${artifactId}.Application;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.security.core.Authentication;
 
 /**
  * Swagger configuration

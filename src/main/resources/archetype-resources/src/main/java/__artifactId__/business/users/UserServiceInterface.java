@@ -12,9 +12,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import ${package}.${artifactId}.domain.users.User;
+        
+import java.util.List;
 
 public interface UserServiceInterface extends UserDetailsService {
 
     @Override
     User loadUserByUsername(String username) throws UsernameNotFoundException;
+    
+    List<User> listUsers();
+    void registerUser(String email, String password) throws ResourceForbiddenOperationException;
 }

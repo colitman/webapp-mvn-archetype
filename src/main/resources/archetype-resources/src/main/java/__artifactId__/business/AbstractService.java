@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.transaction.annotation.Transactional;
 import ${package}.${artifactId}.domain.IdentifiedEntityInterface;
 import ${package}.${artifactId}.data.DefaultDAO;
-import ${package}.${artifactId}.data.ObjectNotExistsException;
 
 /**
  * Abstract entity service implementation
@@ -31,7 +30,7 @@ public abstract class AbstractService {
 	}
 
 	@Transactional
-	public void delete(Long id) {
+	public boolean delete(Long id) {
 		if(id == null) {
 			throw new IllegalArgumentException("Provided ID is NULL");
 		}

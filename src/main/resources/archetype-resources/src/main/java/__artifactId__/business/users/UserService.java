@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
         
 import java.util.List;
+import java.util.stream.Collectors;
+        
+import java.util.List;
 import ${package}.${artifactId}.business.AbstractService;
 import ${package}.${artifactId}.domain.users.User;
 
@@ -27,7 +30,7 @@ public class UserService extends AbstractService implements UserServiceInterface
     protected Class<User> getEntityClass() {
         return User.class;
     }
-
+    
     @Override
     @Transactional
     public User loadUserByUsername(String username) throws UsernameNotFoundException {

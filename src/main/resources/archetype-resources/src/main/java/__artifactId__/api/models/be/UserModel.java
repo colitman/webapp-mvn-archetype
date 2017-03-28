@@ -14,7 +14,7 @@ public class UserModel {
     private Long id;
     
     public UserModel(User domain) {
-        this.id = domain.getId()
+        this.id = domain.getId();
     }
     
     public Long getId() {
