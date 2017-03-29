@@ -32,6 +32,7 @@
         <include>**/*.json</include>
         <include>**/*.sh</include>
         <include>**/*.png</include>
+        <include>**/*.md</include>
       </includes>
     </fileSet>
     <fileSet encoding="UTF-8">
