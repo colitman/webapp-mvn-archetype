@@ -19,6 +19,7 @@
     <fileSet filtered="true" encoding="UTF-8">
       <directory>src/main/webapp</directory>
       <includes>
+        <include>**/*.html</include>
         <include>**/*.jsp</include>
         <include>**/*.xml</include>
       </includes>
@@ -28,6 +29,9 @@
       <includes>
         <include>**/*.css</include>
         <include>**/*.js</include>
+        <include>**/*.json</include>
+        <include>**/*.sh</include>
+        <include>**/*.png</include>
       </includes>
     </fileSet>
     <fileSet encoding="UTF-8">
